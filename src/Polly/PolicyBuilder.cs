@@ -78,6 +78,9 @@ namespace Polly
     /// </summary>
     public sealed partial class PolicyBuilder<TResult>
     {
+        // Useful notes:
+        // 1. Collection member initializations take place only in one private ctor and not duplicated in other ctors.
+        
         private PolicyBuilder()
         {
             ExceptionPredicates = new ExceptionPredicates();
@@ -89,9 +92,12 @@ namespace Polly
 
         internal PolicyBuilder(ExceptionPredicate predicate) : this()
             => ExceptionPredicates.Add(predicate);
-
-        internal PolicyBuilder(ExceptionPredicates exceptionPredicates)
-            : this()
+        
+        // TODO: Refactor.
+        // When calling this() ExceptionPredicates is initialized inside of private ctor
+        // but right after this we re-initialize ExceptionPredicates again in the body of ctor below
+        // 'ExceptionPredicates = exceptionPredicates' which make previous initialization needless
+        internal PolicyBuilder(ExceptionPredicates exceptionPredicates) : this()
             => ExceptionPredicates = exceptionPredicates;
 
         /// <summary>

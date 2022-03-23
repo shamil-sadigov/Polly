@@ -4,7 +4,6 @@ namespace Polly
 {
     public partial class Policy
     {
-
         /// <summary>
         /// Specifies the type of exception that this policy can handle.
         /// </summary>
