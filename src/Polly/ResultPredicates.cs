@@ -3,6 +3,14 @@ using System.Linq;
 
 namespace Polly
 {
+    // Useful notes: 
+    
+    // 1. It seems that they didn't initialize _predicates collection inside of ctor to not take memory.
+    // Instead they do on-demand initialization in Add() method.
+    // BUT as a trade-off they have to check _predicates for null in the rest of the methods.
+    
+    // 2. This class adheres to 'First class collections' principle.
+    
     /// <summary>
     /// A collection of predicates used to define whether a policy handles a given <typeparamref name="TResult"/> value.
     /// </summary>
