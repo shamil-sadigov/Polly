@@ -54,7 +54,6 @@ namespace Polly
         /// <exception cref="ArgumentNullException">onRetry</exception>
         public static RetryPolicy Retry(this PolicyBuilder policyBuilder, int retryCount, Action<Exception, int> onRetry)
         {
-            if (retryCount < 0) throw new ArgumentOutOfRangeException(nameof(retryCount), "Value must be greater than or equal to zero.");
             if (onRetry == null) throw new ArgumentNullException(nameof(onRetry));
 
             return policyBuilder.Retry(retryCount, (outcome, i, _) => onRetry(outcome, i));
