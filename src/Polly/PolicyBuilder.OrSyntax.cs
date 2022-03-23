@@ -36,7 +36,7 @@ namespace Polly
         /// <returns>The PolicyBuilder instance, for fluent chaining.</returns>
         public PolicyBuilder OrInner<TException>() where TException : Exception
         {
-            ExceptionPredicates.Add((HandleInner(ex => ex is TException)));
+            ExceptionPredicates.Add(HandleInner(ex => ex is TException));
             return this;
         }
 
