@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Specs", "Polly.Specs\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Benchmarks", "Polly.Benchmarks\Polly.Benchmarks.csproj", "{BED2624C-E418-4177-8696-0242363FFD43}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.Polly", "Polly.MyTests\Sandbox.Polly.csproj", "{AE685B53-AAEE-4078-BA2A-B6F7236F4197}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{BED2624C-E418-4177-8696-0242363FFD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BED2624C-E418-4177-8696-0242363FFD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BED2624C-E418-4177-8696-0242363FFD43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE685B53-AAEE-4078-BA2A-B6F7236F4197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE685B53-AAEE-4078-BA2A-B6F7236F4197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE685B53-AAEE-4078-BA2A-B6F7236F4197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE685B53-AAEE-4078-BA2A-B6F7236F4197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
