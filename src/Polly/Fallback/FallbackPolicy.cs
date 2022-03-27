@@ -8,6 +8,7 @@ namespace Polly.Fallback
     /// <summary>
     /// A fallback policy that can be applied to delegates.
     /// </summary>
+    // TODO: Figure out what is the purpose of this class if it doesnt contain Result
     public class FallbackPolicy : Policy, IFallbackPolicy
     {
         private Action<Exception, Context> _onFallback;
@@ -45,17 +46,17 @@ namespace Polly.Fallback
     /// </summary>
     public class FallbackPolicy<TResult> : Policy<TResult>, IFallbackPolicy<TResult>
     {
-        private Action<DelegateResult<TResult>, Context> _onFallback;
-        private Func<DelegateResult<TResult>, Context, CancellationToken, TResult> _fallbackAction;
+        private readonly Action<DelegateResult<TResult>, Context> _onFallback;
+        private readonly Func<DelegateResult<TResult>, Context, CancellationToken, TResult> _fallbackProvider;
 
         internal FallbackPolicy(
             PolicyBuilder<TResult> policyBuilder,
             Action<DelegateResult<TResult>, Context> onFallback,
-            Func<DelegateResult<TResult>, Context, CancellationToken, TResult> fallbackAction
+            Func<DelegateResult<TResult>, Context, CancellationToken, TResult> fallbackProvider
             ) : base(policyBuilder)
         {
             _onFallback = onFallback ?? throw new ArgumentNullException(nameof(onFallback));
-            _fallbackAction = fallbackAction ?? throw new ArgumentNullException(nameof(fallbackAction));
+            _fallbackProvider = fallbackProvider ?? throw new ArgumentNullException(nameof(fallbackProvider));
         }
 
         /// <inheritdoc/>
@@ -68,6 +69,6 @@ namespace Polly.Fallback
                 ExceptionPredicates,
                 ResultPredicates,
                 _onFallback,
-                _fallbackAction);
+                _fallbackProvider);
     }
 }

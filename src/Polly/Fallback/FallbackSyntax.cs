@@ -192,20 +192,25 @@ namespace Polly
         }
 
         /// <summary>
-        /// Builds a <see cref="FallbackPolicy"/> which provides a fallback value if the main execution fails.  Executes the main delegate, but if this throws a handled exception or raises a handled result, first calls <paramref name="onFallback"/> with details of the handled exception or result; then calls <paramref name="fallbackAction"/> and returns its result.
+        /// Builds a <see cref="FallbackPolicy"/> which provides a fallback value if the main execution fails.  Executes the main delegate, but if this throws a handled exception or raises a handled result, first calls <paramref name="onFallback"/> with details of the handled exception or result; then calls <paramref name="fallbackProvider"/> and returns its result.
         /// </summary>
         /// <param name="policyBuilder">The policy builder.</param>
-        /// <param name="fallbackAction">The fallback action.</param>
+        /// <param name="fallbackProvider">The fallback action.</param>
         /// <param name="onFallback">The action to call before invoking the fallback delegate.</param>
         /// <exception cref="ArgumentNullException">fallbackAction</exception>
         /// <exception cref="ArgumentNullException">onFallback</exception>
         /// <returns>The policy instance.</returns>
-        public static FallbackPolicy<TResult> Fallback<TResult>(this PolicyBuilder<TResult> policyBuilder, Func<TResult> fallbackAction, Action<DelegateResult<TResult>> onFallback)
+        public static FallbackPolicy<TResult> Fallback<TResult>(
+            this PolicyBuilder<TResult> policyBuilder, 
+            Func<TResult> fallbackProvider, 
+            Action<DelegateResult<TResult>> onFallback)
         {
-            if (fallbackAction == null) throw new ArgumentNullException(nameof(fallbackAction));
+            if (fallbackProvider == null) throw new ArgumentNullException(nameof(fallbackProvider));
             if (onFallback == null) throw new ArgumentNullException(nameof(onFallback));
 
-            return policyBuilder.Fallback((_, _, _) => fallbackAction(), (outcome, _) => onFallback(outcome));
+            return policyBuilder.Fallback(
+                (_, _, _) => fallbackProvider(), 
+                (outcome, _) => onFallback(outcome));
         }
 
         /// <summary>
