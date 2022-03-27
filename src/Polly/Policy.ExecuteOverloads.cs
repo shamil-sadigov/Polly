@@ -157,6 +157,7 @@ namespace Polly
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
+            // TODO: WTF ?
             SetPolicyContext(context, out string priorPolicyWrapKey, out string priorPolicyKey);
 
             try
@@ -165,6 +166,7 @@ namespace Polly
             }
             finally
             {
+                // TODO: WTF ?
                 RestorePolicyContext(context, priorPolicyWrapKey, priorPolicyKey);
             }
         }

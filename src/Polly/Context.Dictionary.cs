@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace Polly
 {
+    // TODO: Anki it separately
+    
     /// <summary>
     /// Context that carries with a single execution through a Policy.   Commonly-used properties are directly on the class.  Backed by a dictionary of string key / object value pairs, to which user-defined values may be added.
     /// <remarks>Do not re-use an instance of <see cref="Context"/> across more than one execution.</remarks>
@@ -15,13 +17,14 @@ namespace Polly
 
         private Dictionary<string, object> wrappedDictionary;
 
-        private Dictionary<string, object> WrappedDictionary => wrappedDictionary ?? (wrappedDictionary = new Dictionary<string, object>());
+        private Dictionary<string, object> WrappedDictionary => wrappedDictionary ??= new Dictionary<string, object>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Context"/> class, with the specified <paramref name="operationKey" /> and the supplied <paramref name="contextData"/>.
         /// </summary>
         /// <param name="operationKey">The operation key.</param>
         /// <param name="contextData">The context data.</param>
+        // TODO: What is operationKey ?
         public Context(string operationKey, IDictionary<string, object> contextData) : this(contextData)
         {
             OperationKey = operationKey;
@@ -33,7 +36,7 @@ namespace Polly
             wrappedDictionary = new Dictionary<string, object>(contextData);
         }
 
-#region IDictionary<string,object> implementation
+        #region IDictionary<string,object> implementation
 
         /// <inheritdoc cref="IDictionary{TKey,Value}"/>
         public ICollection<string> Keys => WrappedDictionary.Keys;

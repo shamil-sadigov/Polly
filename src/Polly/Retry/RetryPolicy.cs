@@ -19,11 +19,16 @@ namespace Polly.Retry
             PolicyBuilder policyBuilder,
             Action<Exception, TimeSpan, int, Context> onRetry, 
             int permittedRetryCount = Int32.MaxValue,
-            IEnumerable<TimeSpan> sleepDurationsEnumerable = null,
-            Func<int, Exception, Context, TimeSpan> sleepDurationProvider = null
+            IEnumerable<TimeSpan> sleepDurationsEnumerable = null, // TODO: What is this ? It seems that now RetryPolicy breaks SRP because it also do wait and retry
+            Func<int, Exception, Context, TimeSpan> sleepDurationProvider = null // TODO: What is this ?
             ) 
             : base(policyBuilder)
         {
+            // TODO: Create PR. I think that this is responsibility of RetryPolicy to make sure that 
+            // permittedRetryCount is not < 0. Encapsulation
+            // In RetrySyntax extensions this permittedRetryCount is checked 3 times but it should be in single place
+            // and here
+
             _permittedRetryCount = permittedRetryCount;
             _sleepDurationsEnumerable = sleepDurationsEnumerable;
             _sleepDurationProvider = sleepDurationProvider;
@@ -42,8 +47,8 @@ namespace Polly.Retry
                     _permittedRetryCount,
                     _sleepDurationsEnumerable,
                     _sleepDurationProvider != null
-                        ? (retryCount, outcome, ctx) => _sleepDurationProvider(retryCount, outcome.Exception, ctx)
-                        : (Func<int, DelegateResult<TResult>, Context, TimeSpan>)null
+                        ? (retryCount, outcome, ctx) => _sleepDurationProvider(retryCount, outcome.Exception, ctx) 
+                        : null
                 );
     }
 

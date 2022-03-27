@@ -17,6 +17,8 @@ namespace Polly
         protected virtual void Implementation(Action<Context, CancellationToken> action, Context context, CancellationToken cancellationToken)
             => Implementation<EmptyStruct>((ctx, token) => { action(ctx, token); return EmptyStruct.Instance; }, context, cancellationToken);
 
+        // TODO: WTF is EmptyStruct ?
+        
         /// <summary>
         /// Defines the implementation of a policy for synchronous executions returning <typeparamref name="TResult"/>.
         /// </summary>

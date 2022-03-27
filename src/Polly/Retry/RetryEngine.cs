@@ -15,7 +15,7 @@ namespace Polly.Retry
             ResultPredicates<TResult> shouldRetryResultPredicates,
             Action<DelegateResult<TResult>, TimeSpan, int, Context> onRetry,
             int permittedRetryCount = Int32.MaxValue,
-            IEnumerable<TimeSpan> sleepDurationsEnumerable = null,
+            IEnumerable<TimeSpan> sleepDurationsEnumerable = null, // TODO: WTF ? Probably provided in WaitAndRetry ?
             Func<int, DelegateResult<TResult>, Context, TimeSpan> sleepDurationProvider = null)
         {
             int tryCount = 0;
@@ -32,6 +32,8 @@ namespace Polly.Retry
 
                     try
                     {
+                        // TODO: WTF is this result about in case method is void
+                        
                         TResult result = action(context, cancellationToken);
 
                         if (!shouldRetryResultPredicates.AnyMatch(result))
@@ -75,6 +77,7 @@ namespace Polly.Retry
 
                     if (waitDuration > TimeSpan.Zero)
                     {
+                        // in case of sync WaitAndRetry Thread blocking take place here
                         SystemClock.Sleep(waitDuration, cancellationToken);
                     }
                 }
@@ -82,6 +85,7 @@ namespace Polly.Retry
             }
             finally
             {
+                // TODO: Explore
                 sleepDurationsEnumerator?.Dispose();
             }
         }

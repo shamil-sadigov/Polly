@@ -33,6 +33,7 @@ namespace Polly
         [DebuggerStepThrough]
         public TResult Execute(Func<Context, TResult> action, IDictionary<string, object> contextData)
             => Execute((ctx, _) => action(ctx), new Context(contextData), DefaultCancellationToken);
+        // TODO: Write test to this method
 
         /// <summary>
         /// Executes the specified action within the policy and returns the result.
@@ -82,6 +83,7 @@ namespace Polly
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
+            // TODO: Explore what happens here ?
             SetPolicyContext(context, out string priorPolicyWrapKey, out string priorPolicyKey);
 
             try

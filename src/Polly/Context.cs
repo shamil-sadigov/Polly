@@ -3,6 +3,8 @@ using Polly.Wrap;
 
 namespace Polly
 {
+    // TODO: Anki this context separetaly
+    
     /// <summary>
     /// Context that carries with a single execution through a Policy.   Commonly-used properties are directly on the class.  Backed by a dictionary of string key / object value pairs, to which user-defined values may be added.
     /// <remarks>Do not re-use an instance of <see cref="Context"/> across more than one call through .Execute(...) or .ExecuteAsync(...).</remarks>
@@ -11,6 +13,7 @@ namespace Polly
     {
         internal static Context None() => new Context();
 
+        // TODO: Why do wen need correlationID here ?
         private Guid? _correlationId;
 
         /// <summary>
