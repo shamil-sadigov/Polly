@@ -10,11 +10,5 @@ namespace Sandbox.Polly
             current.Should().Be(expected, because ?? string.Empty);
         }
         
-          
-        public static void Reset<T>(this ref T item) where T: struct
-        {
-            item = default;
-        }
-
     }
 }

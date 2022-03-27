@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Specs", "Polly.Specs\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Benchmarks", "Polly.Benchmarks\Polly.Benchmarks.csproj", "{BED2624C-E418-4177-8696-0242363FFD43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.Polly", "Polly.MyTests\Sandbox.Polly.csproj", "{AE685B53-AAEE-4078-BA2A-B6F7236F4197}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polly.MyTests", "Polly.MyTests\Polly.MyTests.csproj", "{AE685B53-AAEE-4078-BA2A-B6F7236F4197}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
