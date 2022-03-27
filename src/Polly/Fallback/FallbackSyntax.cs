@@ -188,7 +188,9 @@ namespace Polly
         {
             if (onFallback == null) throw new ArgumentNullException(nameof(onFallback));
 
-            return policyBuilder.Fallback((_, _, _) => fallbackValue, (outcome, _) => onFallback(outcome));
+            return policyBuilder.Fallback(
+                (_, _, _) => fallbackValue, 
+                (outcome, _) => onFallback(outcome));
         }
 
         /// <summary>
@@ -213,6 +215,30 @@ namespace Polly
                 (outcome, _) => onFallback(outcome));
         }
 
+        /// <summary>
+        /// Builds a <see cref="FallbackPolicy"/> which provides a fallback value if the main execution fails.  Executes the main delegate, but if this throws a handled exception or raises a handled result, first calls <paramref name="onFallback"/> with details of the handled exception or result and the execution context; then calls <paramref name="fallbackProvider"/> and returns its result.
+        /// </summary>
+        /// <param name="policyBuilder">The policy builder.</param>
+        /// <param name="fallbackProvider">The fallback action.</param>
+        /// <param name="onFallback">The action to call before invoking the fallback delegate.</param>
+        /// <exception cref="ArgumentNullException">fallbackAction</exception>
+        /// <exception cref="ArgumentNullException">onFallback</exception>
+        /// <returns>The policy instance.</returns>
+        public static FallbackPolicy<TResult> Fallback<TResult>(
+            this PolicyBuilder<TResult> policyBuilder, 
+            Func<DelegateResult<TResult>, Context, CancellationToken, TResult> fallbackProvider, 
+            Action<DelegateResult<TResult>, Context> onFallback)
+        {
+            if (fallbackProvider == null) throw new ArgumentNullException(nameof(fallbackProvider));
+            if (onFallback == null) throw new ArgumentNullException(nameof(onFallback));
+
+            return new FallbackPolicy<TResult>(
+                policyBuilder,
+                onFallback,
+                fallbackProvider);
+        }
+        
+        
         /// <summary>
         /// Builds a <see cref="FallbackPolicy"/> which provides a fallback value if the main execution fails.  Executes the main delegate, but if this throws a handled exception or raises a handled result, first calls <paramref name="onFallback"/> with details of the handled exception or result; then calls <paramref name="fallbackAction"/> and returns its result.
         /// </summary>
@@ -279,24 +305,6 @@ namespace Polly
             return policyBuilder.Fallback((_, ctx, ct) => fallbackAction(ctx, ct), onFallback);
         }
 
-        /// <summary>
-        /// Builds a <see cref="FallbackPolicy"/> which provides a fallback value if the main execution fails.  Executes the main delegate, but if this throws a handled exception or raises a handled result, first calls <paramref name="onFallback"/> with details of the handled exception or result and the execution context; then calls <paramref name="fallbackAction"/> and returns its result.
-        /// </summary>
-        /// <param name="policyBuilder">The policy builder.</param>
-        /// <param name="fallbackAction">The fallback action.</param>
-        /// <param name="onFallback">The action to call before invoking the fallback delegate.</param>
-        /// <exception cref="ArgumentNullException">fallbackAction</exception>
-        /// <exception cref="ArgumentNullException">onFallback</exception>
-        /// <returns>The policy instance.</returns>
-        public static FallbackPolicy<TResult> Fallback<TResult>(this PolicyBuilder<TResult> policyBuilder, Func<DelegateResult<TResult>, Context, CancellationToken, TResult> fallbackAction, Action<DelegateResult<TResult>, Context> onFallback)
-        {
-            if (fallbackAction == null) throw new ArgumentNullException(nameof(fallbackAction));
-            if (onFallback == null) throw new ArgumentNullException(nameof(onFallback));
-
-            return new FallbackPolicy<TResult>(
-                policyBuilder,
-                onFallback,
-                fallbackAction);
-        }
+      
     }
 }

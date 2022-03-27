@@ -4,6 +4,8 @@
     /// Defines properties and methods common to all Fallback policies.
     /// </summary>
 
+    // TODO: How all this kind of  interface interact the process ?
+    
     public interface IFallbackPolicy : IsPolicy
     {
     }
