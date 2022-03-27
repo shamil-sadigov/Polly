@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sandbox.Polly.Timeout
 {
-    public class OPTIMISTIC_timeout_throws_exception_if_timeout_passed
+    public sealed class OPTIMISTIC_timeout_throws_exception_if_timeout_passed
     {
         [Fact]
         public async Task Go()
@@ -35,7 +35,6 @@ namespace Sandbox.Polly.Timeout
                 {
                     // long running operation
                     await Task.Delay(TimeSpan.FromSeconds(5), token);
-
                     executed = true;
                 }, CancellationToken.None);
             }
@@ -48,7 +47,6 @@ namespace Sandbox.Polly.Timeout
             
             executed.Is(false);
             onTimeoutCalled.Is(true);
-        }   
-        
+        }
     }
 }
